@@ -20,9 +20,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+//        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+//
+//        ft.replace(R.id.home_fragment, list_fragment())
+//        ft.commit()
 
-        ft.replace(R.id.main, list_fragment())
-        ft.commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().add(R.id.)
+        }
     }
 }
