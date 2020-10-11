@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,19 +16,19 @@ import com.example.to_do_list2.viewModel.TodoViewModel
 import kotlinx.android.synthetic.main.fragment_list_fragment.*
 import kotlinx.android.synthetic.main.fragment_list_fragment.view.*
 
-class list_fragment : Fragment(), ListAdapter.TodoEvents {
+class ListFragment : Fragment(), ListAdapter.TodoEvents {
 
     private lateinit var mTodoViewModel: TodoViewModel
 
-    companion object {
-        fun newInstance(): list_fragment {
-            return list_fragment()
-        }
-    }
+//    companion object {
+//        fun newInstance(): com.example.to_do_list2.fragment.ListFragment {
+//            return com.example.to_do_list2.fragment.ListFragment()
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list_fragment, container, false)
