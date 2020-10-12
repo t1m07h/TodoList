@@ -13,26 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.to_do_list2.R
 import com.example.to_do_list2.roomDb.Todo
 import com.example.to_do_list2.viewModel.TodoViewModel
-import kotlinx.android.synthetic.main.fragment_list_fragment.*
-import kotlinx.android.synthetic.main.fragment_list_fragment.view.*
+import kotlinx.android.synthetic.main.list_fragment.*
+import kotlinx.android.synthetic.main.list_fragment.view.*
 
 class ListFragment : Fragment(), ListAdapter.TodoEvents {
 
     private lateinit var mTodoViewModel: TodoViewModel
-
-//    companion object {
-//        fun newInstance(): com.example.to_do_list2.fragment.ListFragment {
-//            return com.example.to_do_list2.fragment.ListFragment()
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_list_fragment, container, false)
-
+        val view = inflater.inflate(R.layout.list_fragment, container, false)
+        // Get the adapter
         val adapter = ListAdapter(this)
         val recyclerView = view.list
         recyclerView.adapter = adapter
@@ -57,6 +51,7 @@ class ListFragment : Fragment(), ListAdapter.TodoEvents {
 
     private fun insertTaskToDb() {
         val todo = todo_edit.text.toString()
+        todo_edit.text.clear()
 
         if (!TextUtils.isEmpty(todo)) {
             val data = Todo(0, todo)
