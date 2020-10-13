@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.to_do_list2.R
 import com.example.to_do_list2.roomDb.Todo
 import com.example.to_do_list2.viewModel.TodoViewModel
 import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.android.synthetic.main.list_fragment.view.*
+import java.util.*
 
 class ListFragment : Fragment(), ListAdapter.TodoEvents {
 
@@ -37,6 +40,24 @@ class ListFragment : Fragment(), ListAdapter.TodoEvents {
         mTodoViewModel.readAllTodo.observe(viewLifecycleOwner, Observer { todo ->
             adapter.updateList(todo)
         })
+
+        val itemTouchHelperCallback = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                adapter.del(viewHolder.adapterPosition)
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         view.add_btn.setOnClickListener {
             insertTaskToDb()

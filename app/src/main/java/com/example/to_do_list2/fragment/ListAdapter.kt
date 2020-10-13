@@ -3,6 +3,7 @@ package com.example.to_do_list2.fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_do_list2.R
 import com.example.to_do_list2.roomDb.Todo
@@ -29,6 +30,11 @@ class ListAdapter(todoEvents: TodoEvents): RecyclerView.Adapter<ListAdapter.MyVi
         holder.itemView.del_item_btn.setOnClickListener {
             listener.onDeleteClicked(current_item)
         }
+
+    }
+
+    fun del(position: Int) {
+        listener.onDeleteClicked(task_list[position])
     }
 
     fun updateList(todos: List<Todo>) {
