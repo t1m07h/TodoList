@@ -1,5 +1,9 @@
 package com.example.to_do_list2.fragment
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -7,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,11 +22,12 @@ import com.example.to_do_list2.roomDb.Todo
 import com.example.to_do_list2.viewModel.TodoViewModel
 import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.android.synthetic.main.list_fragment.view.*
-import java.util.*
 
 class ListFragment : Fragment(), ListAdapter.TodoEvents {
 
     private lateinit var mTodoViewModel: TodoViewModel
+    private lateinit var deleteIcon: Drawable
+    private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#FF0000"))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +47,7 @@ class ListFragment : Fragment(), ListAdapter.TodoEvents {
             adapter.updateList(todo)
         })
 
+        deleteIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_delete_sweep)!!
         val itemTouchHelperCallback = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -52,6 +59,28 @@ class ListFragment : Fragment(), ListAdapter.TodoEvents {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 adapter.del(viewHolder.adapterPosition)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean) {
+
+                val itemView = viewHolder.itemView
+                val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
+
+                if (dX > 0) {
+                    swipeBackground.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+                    deleteIcon.setBounds(itemView.left + iconMargin, itemView.top + iconMargin, itemView.left + iconMargin + deleteIcon.intrinsicWidth, itemView.bottom - iconMargin)
+                }
+                swipeBackground.draw(c)
+                deleteIcon.draw(c)
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }
 
         }
