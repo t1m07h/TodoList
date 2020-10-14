@@ -78,7 +78,14 @@ class ListFragment : Fragment(), ListAdapter.TodoEvents {
                     deleteIcon.setBounds(itemView.left + iconMargin, itemView.top + iconMargin, itemView.left + iconMargin + deleteIcon.intrinsicWidth, itemView.bottom - iconMargin)
                 }
                 swipeBackground.draw(c)
+                c.save()
+
+                if (dX > 0) {
+                    c.clipRect(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+                }
+
                 deleteIcon.draw(c)
+                c.restore()
 
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }

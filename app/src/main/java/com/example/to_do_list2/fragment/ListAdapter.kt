@@ -27,9 +27,9 @@ class ListAdapter(todoEvents: TodoEvents): RecyclerView.Adapter<ListAdapter.MyVi
         val current_item = task_list[position]
 
         holder.itemView.todo_text.text = current_item.task
-        holder.itemView.del_item_btn.setOnClickListener {
-            listener.onDeleteClicked(current_item)
-        }
+//        holder.itemView.del_item_btn.setOnClickListener {
+//            listener.onDeleteClicked(current_item)
+//        }
 
     }
 
